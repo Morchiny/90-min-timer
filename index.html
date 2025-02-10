@@ -83,15 +83,44 @@
             });
 
             // Fullscreen API
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
+            function openFullscreen() {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                    document.documentElement.msRequestFullscreen();
+                }
             }
+
+            openFullscreen();
+
+            // Relaunches the full-screen mode when the user exits it
+            document.addEventListener('fullscreenchange', (event) => {
+                if (!document.fullscreenElement) {
+                    openFullscreen();
+                }
+            });
+
+            document.addEventListener('webkitfullscreenchange', (event) => {
+                if (!document.webkitIsFullScreen) {
+                    openFullscreen();
+                }
+            });
+
+            document.addEventListener('mozfullscreenchange', (event) => {
+                if (!document.mozFullScreen) {
+                    openFullscreen();
+                }
+            });
+
+            document.addEventListener('msfullscreenchange', (event) => {
+                if (!document.msFullscreenElement) {
+                    openFullscreen();
+                }
+            });
         };
     </script>
 </body>
