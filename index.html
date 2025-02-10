@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>90 Minute Timer</title>
+    <link rel="manifest" href="manifest.json">
     <style>
         body {
             background-color: black;
@@ -80,6 +81,17 @@
                 updateDisplay(display);
                 startTimer(display); // Restart the timer with the updated time
             });
+
+            // Fullscreen API
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
         };
     </script>
 </body>
