@@ -21,28 +21,11 @@
             font-size: 20vw;
             color: black;
             text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
-            z-index: 1;
             cursor: pointer;
-        }
-        .smoke {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 300%;
-            height: 300%;
-            background: url('https://www.transparenttextures.com/patterns/white-smoke.png');
-            opacity: 0.7;
-            z-index: 0;
-            animation: moveSmoke 60s linear infinite;
-        }
-        @keyframes moveSmoke {
-            0% { transform: translateX(-50%) translateY(-50%); }
-            100% { transform: translateX(50%) translateY(50%); }
         }
     </style>
 </head>
 <body>
-    <div class="smoke"></div>
     <div id="timer">90:00</div>
     <script>
         let timerInterval;
