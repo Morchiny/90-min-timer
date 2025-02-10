@@ -14,19 +14,24 @@
             overflow: hidden;
             font-family: Arial, sans-serif;
             margin: 0;
+            position: relative;
         }
         #timer {
             font-size: 96px;
             color: black;
             text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
+            z-index: 1;
         }
         .smoke {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 200%;
             height: 200%;
             background: url('https://www.transparenttextures.com/patterns/smoke.png');
-            opacity: 0.3;
-            animation: moveSmoke 20s linear infinite;
+            opacity: 0.5;
+            z-index: 0;
+            animation: moveSmoke 30s linear infinite;
         }
         @keyframes moveSmoke {
             0% { transform: translateX(-50%) translateY(-50%); }
