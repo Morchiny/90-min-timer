@@ -47,6 +47,7 @@
     <script>
         let timerInterval;
         let timerPaused = false;
+        let remainingTime = 60 * 90;
 
         function startTimer(duration, display) {
             let timer = duration, minutes, seconds;
@@ -63,14 +64,14 @@
                     if (--timer < 0) {
                         timer = 0;
                     }
+                    remainingTime = timer; // Update remaining time
                 }
             }, 1000);
         }
 
         window.onload = function () {
-            const ninetyMinutes = 60 * 90,
-                display = document.querySelector('#timer');
-            startTimer(ninetyMinutes, display);
+            const display = document.querySelector('#timer');
+            startTimer(remainingTime, display);
 
             display.addEventListener('click', function () {
                 timerPaused = !timerPaused;
@@ -80,28 +81,13 @@
                 const halfWidth = window.innerWidth / 2;
                 if (e.clientX < halfWidth) {
                     // Add 30 seconds
-                    const currentTime = display.textContent.split(':');
-                    let minutes = parseInt(currentTime[0], 10);
-                    let seconds = parseInt(currentTime[1], 10) + 30;
-                    if (seconds >= 60) {
-                        minutes += 1;
-                        seconds -= 60;
-                    }
-                    display.textContent = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+                    remainingTime += 30;
                 } else {
                     // Subtract 30 seconds
-                    const currentTime = display.textContent.split(':');
-                    let minutes = parseInt(currentTime[0], 10);
-                    let seconds = parseInt(currentTime[1], 10) - 30;
-                    if (seconds < 0) {
-                        if (minutes > 0) {
-                            minutes -= 1;
-                            seconds += 60;
-                        } else {
-                            seconds = 0;
-                        }
+                    remainingTime -= 30;
+                    if (remainingTime < 0) {
+                        remainingTime = 0;
                     }
-                    display.textContent = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
                 }
             });
         };
