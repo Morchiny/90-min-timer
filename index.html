@@ -22,6 +22,7 @@
             color: black;
             text-shadow: 2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff;
             z-index: 1;
+            cursor: pointer;
         }
         .smoke {
             position: absolute;
@@ -44,19 +45,24 @@
     <div class="smoke"></div>
     <div id="timer">90:00</div>
     <script>
+        let timerInterval;
+        let timerPaused = false;
+
         function startTimer(duration, display) {
             let timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
+            timerInterval = setInterval(function () {
+                if (!timerPaused) {
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
 
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
 
-                display.textContent = minutes + ":" + seconds;
+                    display.textContent = minutes + ":" + seconds;
 
-                if (--timer < 0) {
-                    timer = 0;
+                    if (--timer < 0) {
+                        timer = 0;
+                    }
                 }
             }, 1000);
         }
@@ -65,6 +71,39 @@
             const ninetyMinutes = 60 * 90,
                 display = document.querySelector('#timer');
             startTimer(ninetyMinutes, display);
+
+            display.addEventListener('click', function () {
+                timerPaused = !timerPaused;
+            });
+
+            document.body.addEventListener('dblclick', function (e) {
+                const halfWidth = window.innerWidth / 2;
+                if (e.clientX < halfWidth) {
+                    // Add 30 seconds
+                    const currentTime = display.textContent.split(':');
+                    let minutes = parseInt(currentTime[0], 10);
+                    let seconds = parseInt(currentTime[1], 10) + 30;
+                    if (seconds >= 60) {
+                        minutes += 1;
+                        seconds -= 60;
+                    }
+                    display.textContent = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+                } else {
+                    // Subtract 30 seconds
+                    const currentTime = display.textContent.split(':');
+                    let minutes = parseInt(currentTime[0], 10);
+                    let seconds = parseInt(currentTime[1], 10) - 30;
+                    if (seconds < 0) {
+                        if (minutes > 0) {
+                            minutes -= 1;
+                            seconds += 60;
+                        } else {
+                            seconds = 0;
+                        }
+                    }
+                    display.textContent = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+                }
+            });
         };
     </script>
 </body>
