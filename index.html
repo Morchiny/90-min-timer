@@ -60,6 +60,7 @@
         }
 
         function startTimer(display) {
+            clearInterval(timerInterval);
             timerInterval = setInterval(function () {
                 if (!timerPaused) {
                     if (remainingTime > 0) {
@@ -94,6 +95,7 @@
                     }
                 }
                 updateDisplay(display);
+                startTimer(display); // Restart the timer with the updated time
             });
         };
     </script>
